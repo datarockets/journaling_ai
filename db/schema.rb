@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_21_151124) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_21_200419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,14 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_21_151124) do
     t.datetime "updated_at", null: false
     t.index ["user_id", "entry_date"], name: "index_journal_entries_on_user_id_and_entry_date", unique: true
     t.index ["user_id"], name: "index_journal_entries_on_user_id"
+  end
+
+  create_table "moods", force: :cascade do |t|
+    t.integer "score", null: false
+    t.bigint "journal_entry_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["journal_entry_id"], name: "index_moods_on_journal_entry_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -36,4 +44,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_21_151124) do
   end
 
   add_foreign_key "journal_entries", "users"
+  add_foreign_key "moods", "journal_entries"
 end

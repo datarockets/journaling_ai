@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   has_many :journal_entries, dependent: :destroy
+  has_many :moods, through: :journal_entries
 
   validates :username, presence: true
 
