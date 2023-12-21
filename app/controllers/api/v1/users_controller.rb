@@ -3,7 +3,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      skip_before_action :verify_authenticity_token
+      skip_before_action :authenticate!, only: [:create]
 
       def create
         user = Users::Create.new.call(user_params)
@@ -11,21 +11,10 @@ module Api
       end
 
       def show
-        head :unauthorized unless username
-
-        user = Users::Find.new.call(username:)
-        if user
-          render json: { user: }.to_json, status: :ok
-        else
-          render json: { error: 'User not found' }, status: :not_found
-        end
+        render json: { user: current_user }.to_json, status: :ok
       end
 
       private
-
-      def username
-        request.headers['Authorization']&.split(' ')&.last
-      end
 
       def user_params
         params.require(:user).permit(
