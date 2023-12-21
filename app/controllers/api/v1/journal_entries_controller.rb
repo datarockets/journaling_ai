@@ -11,7 +11,7 @@ module Api
         entry = current_user.journal_entries.find_by(entry_date: params[:date])
 
         if entry
-          render json: entry, status: :ok
+          render json: journal_entry_body(entry), status: :ok
         else
           render json: {error: "Journal entry for user not found"}, status: :not_found
         end
@@ -43,6 +43,12 @@ module Api
         else
           render json: {error: result[:error]}, status: :unprocessable_entity
         end
+      end
+
+      private
+
+      def journal_entry_body(entry)
+        {id: entry.id, content: entry.note, summary: entry.summary_daily&.note, meme: nil}
       end
     end
   end
