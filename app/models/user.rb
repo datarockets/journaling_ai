@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   has_many :journal_entries, dependent: :destroy
   has_many :moods, through: :journal_entries
+  has_many :summary_weeklies, class_name: "Summary::Weekly", dependent: :destroy
 
   validates :username, presence: true
 
