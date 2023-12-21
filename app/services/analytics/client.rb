@@ -17,7 +17,7 @@ module Analytics
 
     HOST = "https://api.openai.com".freeze
     BASE_URL = "/v1/chat/completions".freeze
-    TOKEN = "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".freeze
+    TOKEN = "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".freeze
     MODEL = "gpt-3.5-turbo".freeze
 
     attr_reader :http_client, :messages, :args

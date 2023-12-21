@@ -26,7 +26,8 @@ module Analytics
 
         return nil unless note
 
-        summary = ::Summary::Weekly.new(note:, user:, start_date:, end_date:)
+        summary = ::Summary::Weekly.find_or_initialize_by(user_id: user.id, start_date:, end_date:)
+        summary.note = note
 
         summary.save ? summary : nil
       end

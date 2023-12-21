@@ -21,11 +21,12 @@ module Analytics
       attr_reader :client, :user, :entry_date
 
       def create_mood
-        score = retrieve_mood&.split("/").second
+        score = retrieve_mood&.split("/")&.second
 
         return nil unless score
 
-        mood = Mood.new(score:, journal_entry:)
+        mood = Mood.find_or_initialize_by(journal_entry_id: journal_entry.id)
+        mood.score = score
 
         mood.save ? mood : nil
       end

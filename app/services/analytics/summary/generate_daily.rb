@@ -25,7 +25,8 @@ module Analytics
 
         return nil unless note
 
-        summary = ::Summary::Daily.new(note:, journal_entry:)
+        summary = ::Summary::Daily.find_or_initialize_by(journal_entry_id: journal_entry.id)
+        summary.note = note
 
         summary.save ? summary : nil
       end
