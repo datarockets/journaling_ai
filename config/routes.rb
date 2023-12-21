@@ -13,7 +13,8 @@ Rails.application.routes.draw do
       get "current_user" => "users#show"
       post "users" => "users#create"
 
-      resources :journal_entries, except: [:destroy, :new, :edit]
+      resources :journal_entries, except: [:destroy, :new, :edit, :show]
+      get "journal_entries/:date" => "journal_entries#show"
     end
   end
 end

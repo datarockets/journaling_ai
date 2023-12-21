@@ -8,7 +8,7 @@ module Api
       end
 
       def show
-        entry = current_user.journal_entries.find_by(id: params[:id])
+        entry = current_user.journal_entries.find_by(entry_date: params[:date])
 
         if entry
           render json: entry, status: :ok
