@@ -17,6 +17,8 @@ Rails.application.routes.draw do
       get "journal_entries/:date" => "journal_entries#show"
       get "home" => "home#index"
       get "journal" => "journal#index"
+      get "profile/statistics" => "profile#statistics"
+      get "profile/trends" => "profile#trends"
     end
   end
 end

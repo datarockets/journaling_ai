@@ -17,4 +17,30 @@ class User < ApplicationRecord
 
     "#{name} #{last_name}"
   end
+
+  def number_of_day_streak
+    query = "
+      WITH Streaks AS (
+        SELECT
+          MIN(entry_date) AS start_date,
+          MAX(entry_date) AS end_date,
+          COUNT(*) AS streak_length
+        FROM (
+          SELECT
+            entry_date,
+            entry_date - ROW_NUMBER() OVER (ORDER BY entry_date)::integer AS group_number
+          FROM
+            (SELECT DISTINCT entry_date FROM journal_entries) AS distinct_dates
+        ) AS date_groups
+        GROUP BY group_number
+      )
+      SELECT
+        MAX(streak_length) AS max_streak
+      FROM Streaks;
+    "
+
+    result = ActiveRecord::Base.connection.execute(query)
+
+    result.values.flatten.first || 0
+  end
 end
