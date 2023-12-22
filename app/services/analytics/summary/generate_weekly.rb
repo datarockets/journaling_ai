@@ -68,7 +68,7 @@ module Analytics
         return @_journal_entries if defined? @_journal_entries
 
         @_journal_entries = user.journal_entries
-          .where("entry_date >= :start_date OR entry_date <= :end_date", start_date:, end_date:)
+          .where("entry_date >= :start_date AND entry_date <= :end_date", start_date:, end_date:)
       end
     end
   end
