@@ -17,7 +17,6 @@ module Analytics
 
     HOST = "https://api.openai.com".freeze
     BASE_URL = "/v1/chat/completions".freeze
-    TOKEN = "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".freeze
     MODEL = "gpt-3.5-turbo".freeze
 
     attr_reader :http_client, :messages, :args
@@ -31,7 +30,7 @@ module Analytics
     def client
       @_client ||= http_client.new(url: HOST) do |f|
         f.request :json
-        f.request :authorization, "Bearer", TOKEN
+        f.request :authorization, "Bearer", ENV.fetch("OPEN_AI_TOKEN", "")
         f.response :json
       end
     end
