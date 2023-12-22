@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resources :journal_entries, except: [:destroy, :new, :edit, :show]
       get "journal_entries/:date" => "journal_entries#show"
       get "home" => "home#index"
+      get "journal" => "journal#index"
     end
   end
 end
